@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:7.2.4
+    command: redis-server /etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    deploy:
+      replicas: 1
+    restart: always
+    networks:
+      - dbNetwork
+    volumes:
+      - ./redis/conf:/etc/redis
+      - ./redis/data:/data
+      - ./redis/log:/data/log
+    environment:
+      - TZ=Asia/Shanghai
+
+networks:
+  dbNetwork:

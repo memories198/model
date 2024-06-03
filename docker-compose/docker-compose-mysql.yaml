@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.3.0
+    ports:
+      - "3306:3306"
+    deploy:
+      replicas: 1
+    restart: always
+    volumes:
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/log:/var/log
+    networks:
+      - dbNetwork
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
+
+networks:
+  dbNetwork:

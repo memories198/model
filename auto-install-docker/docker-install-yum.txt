@@ -1,0 +1,10 @@
+
+wget https://mirror.nju.edu.cn/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo
+
+
+sed -i 's/download.docker.com/mirror.nju.edu.cn\/docker-ce/g' /etc/yum.repos.d/docker-ce.repo
+
+yum makecache
+
+sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
