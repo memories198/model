@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 services:
   mysql1:
     image: mysql:8.3.0
@@ -15,7 +15,7 @@ services:
       - dbNetwork
     environment:
       - TZ=Asia/Shanghai
-      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=oracle
   mysql2:
     image: mysql:8.3.0
     ports:
@@ -31,7 +31,7 @@ services:
       - dbNetwork
     environment:
       - TZ=Asia/Shanghai
-      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=oracle
   mysql3:
     image: mysql:8.3.0
     ports:
@@ -47,6 +47,6 @@ services:
       - dbNetwork
     environment:
       - TZ=Asia/Shanghai
-      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=oracle
 networks:
   dbNetwork:

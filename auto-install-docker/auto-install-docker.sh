@@ -63,7 +63,7 @@ else
 fi
 
 echo -e '正在添加docker镜像仓库(网易源)...\n'
-sudo mkdir -p /etc/docker && sudo cat > /etc/docker/wangyi_yuan.json <<-'EOF' 2> /tmp/auto-install-docker.log
+sudo mkdir -p /etc/docker && sudo cat > /etc/docker/daemon.json << 'EOF' 2> /tmp/auto-install-docker.log
 {
   "registry-mirrors": ["http://hub-mirror.c.163.com"],
   "exec-opts": ["native.cgroupdriver=systemd"]

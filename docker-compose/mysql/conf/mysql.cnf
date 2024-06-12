@@ -1,7 +1,7 @@
 [mysqld]
 server-id=200
 user=mysql #MySQL服务器将以 mysql 用户的身份运行
-datadir=/var/lib/mysql #MySQL服务器存储数据文件的目录路径
+
 socket=/var/lib/mysql/mysql.sock #MySQL服务器与客户端通信的套接字文件路径。客户端用于与服务器进行本地连接。
 log-bin=mysql-bin #二进制日志文件的文件名
 relay-log=mysql-relay-bin #中继日志文件的文件名
@@ -19,7 +19,7 @@ slow_query_log = 1
 slow_query_log_file = /var/log/slow-query.log
 long_query_time = 1
 
-datadir=/var/lib/mysql
+datadir=/var/lib/mysql #MySQL服务器存储数据文件的目录路径
 pid-file=/var/run/mysqld/mysqld.pid
 log-error=/var/log/mysqld.log
 
