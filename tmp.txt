@@ -1,6 +1,17 @@
 
 
+姓名:
+    刘雨杰
 
+工作内容:
+    1.了解了公有云所需要的资源对象
+    2.阅读了go-get-guide项目
+    3.尝试编写probe的yaml文件，用于监控cps
+
+收获:
+    1.全面了解探针的类型和作用
+    2.阅读了多个probe模板
+    3.学习了接入云巢探针的方法
 
 docker讲解视频：
     https://www.bilibili.com/video/BV1aA4m1w7Ew/?spm_id_from=333.788&vd_source=3d73ffdf67935c56f44da7a0d796223c

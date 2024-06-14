@@ -1,57 +1,62 @@
 #未完成
-version: '3.9'
 services:
   zookeeper:
     image: wurstmeister/zookeeper
+    container_name: zk
     restart: always
     networks:
       - kafkaNetwork
     expose:
       - "2181"
+    volumes:
+      - /etc/localtime:/etc/localtime
 
   kafka1:
     image: wurstmeister/kafka
+    container_name: kafka1
     restart: always
     ports:
-      - "9094:9094"
-    expose:
-      - "9093"
+      - "9092:9092"
     environment:
-      TZ: Asia/Shanghai
-      KAFKA_BROKER_ID: 1
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka1:9093,OUTSIDE://localhost:9094 #指定 Kafka 广播给客户端的监听地址
-      #INSIDE://kafka:9093：用于内部通信，广播地址为容器内部的 kafka 主机名，端口 9093。
-      #OUTSIDE://localhost:9094：用于外部通信.
-
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT #用于定义不同监听器的安全协议。
-      #INSIDE 和 OUTSIDE 两种监听器都使用 PLAINTEXT（明文传输）协议。
-
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE #指定 Kafka broker 之间通信使用的监听器名称。表示 Kafka broker 之间将通过 INSIDE 监听器进行通信。
-
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-
-      KAFKA_LISTENERS: INSIDE://kafka1:9093,OUTSIDE://0.0.0.0:9094 #用于指定 Kafka 监听的地址
-
+      - 'TZ=Asia/Shanghai'
+      - 'KAFKA_BROKER_ID=0'
+      - 'KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181'
+      - 'KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.30.77:9092' #指定 Kafka Broker 向外部客户端通告的地址
+      - 'KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092'
+    volumes:
+      - ./kafka1/data:/kafka/kafka-logs
     networks:
       - kafkaNetwork
-
   kafka2:
     image: wurstmeister/kafka
+    container_name: kafka2
     restart: always
     ports:
-      - "9095:9095"
-    expose:
-      - "9093"
+      - "9093:9093"
     environment:
-      TZ: Asia/Shanghai
-      KAFKA_BROKER_ID: 2
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka2:9093,OUTSIDE://localhost:9095
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENERS: INSIDE://kafka2:9093,OUTSIDE://0.0.0.0:9095 #用于指定 Kafka 监听的地址
-
+      - 'TZ=Asia/Shanghai'
+      - 'KAFKA_BROKER_ID=1'
+      - 'KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181'
+      - 'KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.30.77:9093' #指定 Kafka Broker 向外部客户端通告的地址
+      - 'KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9093'
     networks:
       - kafkaNetwork
+    volumes:
+      - ./kafka2/data:/kafka/kafka-logs
+
+  kafka-manager:
+    container_name: kafka-manager
+    image: dushixiang/kafka-map
+    restart: always
+    ports:
+      - '9001:8080'
+    networks:
+      - kafkaNetwork
+    environment:
+      DEFAULT_USERNAME: root
+      DEFAULT_PASSWORD: 1
+    volumes:
+      - ./kafka-map/data:/usr/local/kafka-map/data
+
 networks:
   kafkaNetwork:

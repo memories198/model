@@ -1,13 +1,5 @@
 package main
 
-import (
-	"context"
-	"fmt"
-	"go.etcd.io/etcd/client/v3"
-	"log"
-	"time"
-)
-
 // import (
 //
 //	"fmt"
@@ -43,33 +35,36 @@ import (
 //		//read = (*SomeStruct)(atomic.LoadPointer(&ptr))
 //		//fmt.Println("Updated value:", read.Value)
 //	}
-func main() {
-	// 创建一个客户端配置
-	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{"localhost:2379"}, // etcd 集群的地址
-		DialTimeout: 5 * time.Second,
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer cli.Close()
 
-	// 使用上下文进行超时控制
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	// 示例：放置一个键值对
-	_, err = cli.Put(ctx, "sample_key", "sample_value")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// 示例：获取一个键值对
-	resp, err := cli.Get(ctx, "sample_key")
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, ev := range resp.Kvs {
-		fmt.Printf("%s : %s\n", ev.Key, ev.Value)
-	}
-}
+// 访问etcd
+//
+//	func main() {
+//		// 创建一个客户端配置
+//		cli, err := clientv3.New(clientv3.Config{
+//			Endpoints:   []string{"localhost:2379"}, // etcd 集群的地址
+//			DialTimeout: 5 * time.Second,
+//		})
+//		if err != nil {
+//			log.Fatal(err)
+//		}
+//		defer cli.Close()
+//
+//		// 使用上下文进行超时控制
+//		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+//		defer cancel()
+//
+//		// 示例：放置一个键值对
+//		_, err = cli.Put(ctx, "sample_key", "sample_value")
+//		if err != nil {
+//			log.Fatal(err)
+//		}
+//
+//		// 示例：获取一个键值对
+//		resp, err := cli.Get(ctx, "sample_key")
+//		if err != nil {
+//			log.Fatal(err)
+//		}
+//		for _, ev := range resp.Kvs {
+//			fmt.Printf("%s : %s\n", ev.Key, ev.Value)
+//		}
+//	}
